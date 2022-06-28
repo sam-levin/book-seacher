@@ -2,8 +2,11 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 
+//the following will be replaced by the LOGIN_USER
 import { loginUser } from '../utils/API';
 import Auth from '../utils/auth';
+import LOGIN_USER from '../utils/mutations'
+
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
@@ -26,6 +29,7 @@ const LoginForm = () => {
     }
 
     try {
+      // this following line needs to be changed
       const response = await loginUser(userFormData);
 
       if (!response.ok) {

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-
+// this following line will be replaced by the ADD_USER mutation
 import { createUser } from '../utils/API';
 import Auth from '../utils/auth';
+import ADD_USER from '../utils/mutations'
+
 
 const SignupForm = () => {
   // set initial form state
