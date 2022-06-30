@@ -40,6 +40,7 @@ type Query {
     link:
   }
 
+  
 `
 
 module.exports = typeDefs;
