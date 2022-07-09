@@ -26,13 +26,41 @@ const resolvers = {
       
             return { token, user };
         },
-        login: {
-
+        login: async (parent, { email, password }) => {
+          const user = await User.findOne({ email });
+    
+          if (!user) {
+            throw new AuthenticationError('Incorrect credentials');
+          }
+    
+          const correctPw = await user.isCorrectPassword(password);
+    
+          if (!correctPw) {
+            throw new AuthenticationError('Incorrect credentials');
+          }
+    
+          const token = signToken(user);
+          return { token, user };
         },
-        saveBook: {
-
+        saveBook: async (parent, { body }, context) => {
+          if (context.user) {
+            const updatedUser = await User.findOneAndUpdate(
+              { _id: context.user._id },
+              { $addToSet: { savedBooks: body } },
+              { new: true }
+            );
+            return updatedUser;
+          }
+          throw new AuthenticationError("You need to be logged in!");
         },
-        deleteBook: {
+        deleteBook: async (parent, {bookdId} , context) {
+          if (context.user) {
+            const updatedUser = await User.findOneAndUpdate (
+              { _id: context.user._id },
+              { $pull: { savedBooks: bookdId } },
+              { new: true }
+            )
+          }
             
         },
 
