@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 // this following line will be replaced by the ADD_USER mutation
-import { createUser } from '../utils/API';
+//import { createUser } from '../utils/API';
 import Auth from '../utils/auth';
-import ADD_USER from '../utils/mutations'
+import {ADD_USER} from '../utils/mutations'
+import { useMutation } from '@apollo/client';
 
 
 const SignupForm = () => {
@@ -28,9 +29,13 @@ const SignupForm = () => {
       event.preventDefault();
       event.stopPropagation();
     }
+    const [addUser, { error }] = useMutation(ADD_USER);
 
+    // this needs to be changed 
     try {
-      const response = await createUser(userFormData);
+      // const response = await createUser(userFormData);
+      const [addUser, { error }] = useMutation(ADD_USER);
+
 
       if (!response.ok) {
         throw new Error('something went wrong!');
